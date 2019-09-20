@@ -41,7 +41,7 @@ class NewsListPresenter {
     }
 
     private void loadArticles() {
-        guardianRepository.getNewsArticles()
+        disposables.add(guardianRepository.getNewsArticles()
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe(newsArticles -> {
@@ -49,11 +49,11 @@ class NewsListPresenter {
                 }, throwable -> {
                     throwable.printStackTrace();
                     view.showError();
-                });
+                }));
     }
 
     interface View {
-            void showNewsArticles(List<NewsArticle> articles);
+        void showNewsArticles(List<NewsArticle> articles);
 
         void displayArticle(NewsArticle article);
 
